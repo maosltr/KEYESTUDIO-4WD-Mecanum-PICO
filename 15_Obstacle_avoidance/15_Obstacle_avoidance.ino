@@ -30,13 +30,12 @@ void setup()
 
 void loop()
 {
-  
 
   int pos;
   int distance;
   int newDistance;
 
-  for (pos = 45; pos <= 135; pos += 5)
+  for (pos = 45; pos <= 135; pos += 10)
   { // goes from 0 degrees to 180 degrees
     // in steps of 1 degree
     myservo.write(pos); // tell servo to go to position in variable 'pos'
@@ -44,52 +43,56 @@ void loop()
     distance = get_distance();
     if (distance <= 30)
     {
-      break;
+      mecanumCar.Stop();
+      delay(20000);
     }
   }
-  for (pos = 135; pos >= 45; pos -= 5)
+  for (pos = 135; pos >= 45; pos -= 10)
   {                     // goes from 180 degrees to 0 degrees
     myservo.write(pos); // tell servo to go to position in variable 'pos'
     mecanumCar.Advance();
     distance = get_distance();
     if (distance <= 30)
     {
-      break;
+      mecanumCar.Stop();
+      delay(20000);
     }
   }
 
-  while (distance < 20)
-  {
-    distance = get_distance();
-    Serial.print(distance);
-    Serial.println("cm");
-
-    if (pos < 90)
+  /*
+    while (distance < 20)
     {
-      myservo.write(91);
+      distance = get_distance();
+      Serial.print(distance);
+      Serial.println("cm");
 
-      while (distance < 60)
+      if (pos < 90)
       {
-        distance = get_distance();
-        Serial.print(distance);
-        Serial.println("cm DL");
-        mecanumCar.drift_left();
+        myservo.write(91);
+
+        while (distance < 60)
+        {
+          distance = get_distance();
+          Serial.print(distance);
+          Serial.println("cm DL");
+          mecanumCar.drift_left();
+        }
+      }
+      else
+      {
+        myservo.write(89);
+
+        while (distance < 60)
+        {
+          distance = get_distance();
+          Serial.print(distance);
+          Serial.println(" cm DR");
+          mecanumCar.drift_right();
+        }
       }
     }
-    else
-    {
-      myservo.write(89);
-
-      while (distance < 60)
-      {
-        distance = get_distance();
-        Serial.print(distance);
-        Serial.println(" cm DR");
-        mecanumCar.drift_right();
-      }
-    }
-  }
-  delay(1000);
+    delay(1000);
+  */
 }
 
 /*********************Ultrasonic detects the distance*******************************/
